@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 글로우업리즈 · CE 크리에이팅 3기 모집
 
-## Getting Started
+크리에이터 이코노미(CE) 사업의 **3기 지원자 모집 랜딩 페이지 + 본사 어드민 콘솔**.
 
-First, run the development server:
+- 시청자 A — 3기 지원 잠재 고객 (랜딩 `/`)
+- 시청자 B — 본사 운영자 (어드민 `/admin`)
+
+## 폴더
+
+| 폴더             | 성격                                                           | 실행                    |
+| ---------------- | -------------------------------------------------------------- | ----------------------- |
+| [`mock/`](mock/) | Alpine.js + Tailwind CDN 단일 파일. 40분 목업 원본 (기준 문서) | `open mock/index.html`  |
+| [`web/`](web/)   | Next.js 16 + React 19 + shadcn/ui. 프로덕션급 마이그레이션     | `cd web && npm run dev` |
+
+## 스택 (web/)
+
+- **Next.js 16.3.1** · App Router · Turbopack
+- **React 19.2.8** · **TypeScript**
+- **TailwindCSS v4** (CSS-first `@theme`) · **shadcn/ui** (Dialog · Accordion · Input · Select · Textarea · Label)
+- **React Hook Form + Zod** — 지원 폼 4-step 스키마 검증
+- **motion** · **lucide-react** — 애니메이션·아이콘 (필요시)
+- **next/font/local** — Instrument Serif + Gowun Batang (헤드), Pretendard Variable (본문). 로컬 woff2 셀프호스팅
+- 이미지: `picsum.photos/seed/*` (안정 mock)
+
+## 라우트
+
+| 경로     | 무엇                                                                                                                                                                       | 성격           |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `/`      | 랜딩 · Hero → Why → Benefits → Achievement → Categories → Journey → Process → FAQ → CTA                                                                                    | 잠재 고객 유입 |
+| `/admin` | 본사 어드민 3-tab · **퍼널 & CRM** (역산 퍼널·단톡방 파이프라인·이번 주 원데이) / **조직 & 조교** (계층 트리·조 배정·분화) / **미션 & 피드백** (팀원 리스트·피드백 스레드) | 운영자 관리    |
+
+## 실행
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd web
+npm install         # 최초 1회
+npm run dev         # http://localhost:3000 (랜딩)
+                    # http://localhost:3000/admin (어드민)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+원본 mock 은 세팅 없이 브라우저에서:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+open mock/index.html
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 시연 시나리오
 
-## Learn More
+### 랜딩 `/`
 
-To learn more about Next.js, take a look at the following resources:
+1. Hero의 `3기 지원하기` → 4-step Modal (카테고리 → 정보 → 자가진단 → 완료)
+2. Categories 8개 카드 클릭 → 카테고리 상세 Modal → `이 카테고리로 지원하기` → 폼 프리필
+3. FAQ 아코디언 · Journey 계층 hover · Process 5단계 (오픈채팅 → 원데이 → 지원서 → 면접 → 입과)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 어드민 `/admin`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**01 · 퍼널 & CRM** (§5 · §6)
 
-## Deploy on Vercel
+- 역산 퍼널 3층 (DB 18,420/20K → 원데이 1,806/2K → 월구독 202/200)
+- 층간 전환율 배지 (목표 10% 대비)
+- 단톡방 파이프라인 테이블 (일반 → 원데이 → 조별)
+- 이번 주 원데이 예약·결제·리마인드
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**02 · 조직 & 조교** (§1)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 카테고리(사진) 총괄 1명 → 조교 L1/L2 트리
+- 조교 카드 클릭 → 우측 담당 팀원 조 배정 테이블
+- L2 조교에 "다음 총괄로 분화" 힌트
+
+**03 · 미션 & 피드백** (§2 · §3.2)
+
+- 브랜딩 O/X 필터
+- 팀원 리스트 (이행률 프로그레스, 낮으면 코랄)
+- 상세: 브랜딩 O는 편집 가능 미션, X는 읽기 전용 + 이행 체크
+- 1:1 피드백 스레드 + 입력창
+
+## 요구사항 → UI 매핑
+
+| 원 요구사항 (§, `REQUIREMENTS.md`)                 | UI 반영                                                |
+| -------------------------------------------------- | ------------------------------------------------------ |
+| §3.3 · 공유오피스 + PT + 독학재수학원 결합         | Why 섹션 3-column ("자리 · 미션 · 컨펌")               |
+| §3.2 · 사옥·촬영·채널 출연·미션·피드백·수익화 지원 | Benefits 6-그리드                                      |
+| §3.5 · 3~6개월 안에 협찬                           | Achievement 다크 섹션                                  |
+| §1.2 · 조교가 다음 총괄로 분화                     | Journey (계층 카드 + 기수 확장 타임라인)               |
+| §5 · 퍼널 (DB → 원데이 → 월구독)                   | Process 5단계 스텝                                     |
+| §6.4 · 니즈 필터링 (무분별한 유입 차단)            | 원데이 유료 안내 + 지원 폼 자가진단 (동기·시간·팔로워) |
+| §2 · 브랜딩 O/X                                    | 카테고리 카드/모달 배지, 폼 Step 2에서 채널 URL 수집   |
+| §7 · 원데이 = 월구독 시뮬레이션                    | Process 02번 스텝, 지원 폼 Step 3 "원데이 참석 여부"   |
