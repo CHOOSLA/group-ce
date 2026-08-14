@@ -51,7 +51,7 @@ export function FAQ() {
             </p>
           </div>
           <div className="lg:col-span-8">
-            <Accordion type="single" collapsible className="border-t border-line">
+            <Accordion className="border-t border-line">
               {faqs.map((f, i) => (
                 <AccordionItem
                   key={i}
