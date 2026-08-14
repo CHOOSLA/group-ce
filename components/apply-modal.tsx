@@ -68,6 +68,7 @@ export function ApplyModal() {
   }, [open, initialCategory, setValue]);
 
   const cat1 = watch("cat1");
+  const cat2 = watch("cat2");
   const hours = watch("hours");
   const motive = watch("motive");
 
@@ -124,7 +125,11 @@ export function ApplyModal() {
                   render={({ field }) => (
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className="mt-2 w-full">
-                        <SelectValue placeholder="선택하세요" />
+                        {cat1 ? (
+                          <span>{findCategory(cat1)?.name || cat1}</span>
+                        ) : (
+                          <span className="text-muted-foreground">선택하세요</span>
+                        )}
                       </SelectTrigger>
                       <SelectContent>
                         {categories.map((c) => (
@@ -148,7 +153,11 @@ export function ApplyModal() {
                       onValueChange={field.onChange}
                     >
                       <SelectTrigger className="mt-2 w-full">
-                        <SelectValue placeholder="없음" />
+                        {cat2 ? (
+                          <span>{findCategory(cat2)?.name || cat2}</span>
+                        ) : (
+                          <span className="text-muted-foreground">없음</span>
+                        )}
                       </SelectTrigger>
                       <SelectContent>
                         {categories.map((c) => (
